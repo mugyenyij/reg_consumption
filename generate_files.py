@@ -251,7 +251,18 @@ def write2csv(df, filename, csv_dir = '/Users/joelmugyenyi/Desktop/REG_CSV/_smoo
 if __name__ == "__main__":
     
     #. Initialization
-    host = 'server' # 'local or server'
+    host = 'local' # 'local or server'
+    set_flag = None
+    which_tariff = 2    # 1 or 2
+    date2day = datetime.datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
+    tariff_date_1 = datetime.date(2015, 9, 1)  # 1st tariff change
+    tariff_date_2 = datetime.date(2017, 1, 1)  # 2nd tariff change
+    if which_tariff == 1:
+        tariff_date = tariff_date_1
+    elif which_tariff == 2:
+        tariff_date = tariff_date_2
+    else:
+        raise('Wrong tariff')
 
     # customer payments
     if host == 'local':
@@ -305,11 +316,7 @@ if __name__ == "__main__":
         raise('Select either local or server')
 
     # Variables, for selecting consumption categories
-    set_flag = 'unfiltered'
-    date2day = datetime.datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
-    tariff_date_1 = datetime.date(2015, 9, 1)  # 1st tariff change
-    tariff_date_2 = datetime.date(2017, 1, 1)  # 2nd tariff change
-    tariff_date = tariff_date_1
+  
     if tariff_date == tariff_date_1:
         end_year = tariff_date.year
     elif tariff_date == tariff_date_2:
@@ -334,31 +341,31 @@ if __name__ == "__main__":
         unfiltered_df_list = [low_df, med_df, high_df]  # List of your dataframes
         unfiltered_df = pd.concat(unfiltered_df_list)
         regression_df = get_regression_df(tariff_date, meta_df=meta_df, df=unfiltered_df, period=period) 
-        write2csv(regression_df, filename=f'tariff1_consumers_unfiltered_{date2day}.csv', csv_dir=csv_dir)
+        write2csv(regression_df, filename=f'tariff{which_tariff}_consumers_unfiltered_{date2day}.csv', csv_dir=csv_dir)
     elif  set_flag == 'unbalanced':
         hc_df_list = [hc_low_df, hc_med_df, hc_high_df]  # List of your dataframes
         hc_df = pd.concat(hc_df_list)
         regression_df = get_regression_df(tariff_date, meta_df=meta_df, df=hc_df, period=period) 
-        write2csv(regression_df, filename=f'tariff1_consumers_unbalanced_{date2day}.csv', csv_dir=csv_dir)
+        write2csv(regression_df, filename=f'tariff{which_tariff}_consumers_unbalanced_{date2day}.csv', csv_dir=csv_dir)
     elif set_flag == 'balanced':
         hc_df_list = [hc_low_df, hc_med_df, hc_high_df]  # List of your dataframes
         hc_df = pd.concat(hc_df_list)
         regression_df = get_regression_df(tariff_date, meta_df=meta_df, df=hc_df, period=period)    
         regression_df_balanced = get_balanced_set(regression_df)
-        write2csv(regression_df_balanced, filename=f'tariff1_consumers_balanced_{date2day}.csv', csv_dir=csv_dir)
+        write2csv(regression_df_balanced, filename=f'tariff{which_tariff}_consumers_balanced_{date2day}.csv', csv_dir=csv_dir)
     else:
         unfiltered_df_list = [low_df, med_df, high_df]  # List of your dataframes
         unfiltered_df = pd.concat(unfiltered_df_list)
         regression_df = get_regression_df(tariff_date, meta_df=meta_df, df=unfiltered_df, period=period) 
-        write2csv(regression_df, filename=f'tariff1_consumers_unfiltered_{date2day}.csv', csv_dir=csv_dir)
+        write2csv(regression_df, filename=f'tariff{which_tariff}_consumers_unfiltered_{date2day}.csv', csv_dir=csv_dir)
         
         hc_df_list = [hc_low_df, hc_med_df, hc_high_df]  # List of your dataframes
         hc_df = pd.concat(hc_df_list)
         regression_df = get_regression_df(tariff_date, meta_df=meta_df, df=hc_df, period=period) 
-        write2csv(regression_df, filename=f'tariff1_consumers_unbalanced_{date2day}.csv', csv_dir=csv_dir)
+        write2csv(regression_df, filename=f'tariff{which_tariff}_consumers_unbalanced_{date2day}.csv', csv_dir=csv_dir)
         
         regression_df_balanced = get_balanced_set(regression_df)
-        write2csv(regression_df_balanced, filename=f'tariff1_consumers_balanced_{date2day}.csv', csv_dir=csv_dir)
+        write2csv(regression_df_balanced, filename=f'tariff{which_tariff}_consumers_balanced_{date2day}.csv', csv_dir=csv_dir)
 
     
 
