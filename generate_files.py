@@ -251,7 +251,7 @@ def write2csv(df, filename, csv_dir = '/Users/joelmugyenyi/Desktop/REG_CSV/_smoo
 if __name__ == "__main__":
     
     #. Initialization
-    host = 'local' # 'local or server'
+    host = 'server' # 'local or server'
     set_flag = None
     which_tariff = 2    # 1 or 2
     date2day = datetime.datetime.today().strftime('%Y-%m-%d-%H:%M:%S')

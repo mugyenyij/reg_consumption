@@ -1,6 +1,7 @@
 
 import os,sys,pickle
 import numpy as np
+import pandas as pd
 import time
 start_time = time.time()
 
@@ -21,5 +22,7 @@ if __name__ == '__main__':
         stop_idx  = start_idx + step_size
         tmp_ids = unique_consumer_ids[start_idx:stop_idx]
         tmp_df =  transaction_data[transaction_data.consumer_id.isin(tmp_ids)]
+		tmp_df['transaction_date'] = pd.to_datetime(tmp_df.transaction_date)
+		tmp_df['transaction_date'] = tmp_df.transaction_date.dt.strftime('%m-%d-%Y')
         tmp_df.to_pickle(os.path.join('/mnt/nfs/work1/jtaneja/jmugyenyi/REG_consumption_data/batched_data/batch_grouped_consumer_ids','transaction_file_batch_{}_reg.pck'.format(i))) 
     print("--- %s seconds ---" % (time.time() - start_time))

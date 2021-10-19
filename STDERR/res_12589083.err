@@ -1,0 +1,5 @@
+  File "chuncked_grouped_data.py", line 25
+    tmp_df['transaction_date'] = pd.to_datetime(tmp_df.transaction_date)
+                                                                       ^
+TabError: inconsistent use of tabs and spaces in indentation
+srun: error: swarm025: task 0: Exited with exit code 1
